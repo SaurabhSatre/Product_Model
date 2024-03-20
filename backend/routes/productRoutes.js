@@ -1,10 +1,8 @@
 const express = require('express');
-const { Product, SubCategory, Category, Brand } = require('./models');
+const { Product, SubCategory, Category, Brand } = require('../modules/Modules');
 
 const router = express.Router();
 
-
-// Route to get all products
 router.get('/products', async (req, res) => {
     try {
         const products = await Product.find().populate('category subCategory brand');
@@ -14,7 +12,6 @@ router.get('/products', async (req, res) => {
     }
 });
 
-// Route to create a new product
 router.post('/products', async (req, res) => {
     const product = new Product({
         name: req.body.name,
@@ -33,7 +30,6 @@ router.post('/products', async (req, res) => {
     }
 });
 
-// Route to get all categories
 router.get('/categories', async (req, res) => {
     try {
         const categories = await Category.find().populate('brand');
@@ -43,7 +39,6 @@ router.get('/categories', async (req, res) => {
     }
 });
 
-// Route to create a new category
 router.post('/categories', async (req, res) => {
     const category = new Category({
         name: req.body.name,
@@ -57,7 +52,7 @@ router.post('/categories', async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 });
-// Route to get all subcategories
+
 router.get('/subcategories', async (req, res) => {
     try {
         const subcategories = await SubCategory.find().populate('category');
@@ -67,7 +62,6 @@ router.get('/subcategories', async (req, res) => {
     }
 });
 
-// Route to create a new subcategory
 router.post('/subcategories', async (req, res) => {
     const subcategory = new SubCategory({
         name: req.body.name,
@@ -82,7 +76,6 @@ router.post('/subcategories', async (req, res) => {
     }
 });
 
-// Route to get all brands
 router.get('/brands', async (req, res) => {
     try {
         const brands = await Brand.find();
@@ -92,7 +85,6 @@ router.get('/brands', async (req, res) => {
     }
 });
 
-// Route to create a new brand
 router.post('/brands', async (req, res) => {
     const brand = new Brand({
         name: req.body.name
